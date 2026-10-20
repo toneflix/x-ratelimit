@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "en-US": "See X (Twitter) rate limits, reset countdowns and limit errors from the requests your browser already makes. Nothing is sent anywhere."
+  },
+  "description": {
+    "en-US": "Rate Limit Tracker for X shows the rate limits X (formerly Twitter) applies to your account, using the requests your browser already makes. No extra requests, no account connection, nothing sent anywhere.\n\n**What you get**\n\n- Remaining requests and reset countdowns for follows, unfollows, posts and likes\n- Limit hits caught even when X doesn't return a 429, such as a follow limit reported as an error code\n- Every X API endpoint that reports a rate limit, sorted by how close it is to running out\n- A request log you can filter to tracked actions or errors\n- A toolbar badge with the lowest remaining count, which turns red after you hit a limit\n\n**Make it yours**\n\n- Choose which actions to track and which appear on the home screen\n- Track any other X endpoint by name, path or URL, or with one click from the Endpoints page\n- Export your history as JSON, or clear it at any time\n\n**Private by design**\n\n- Runs only on x.com\n- Never reads cookies, tokens or request headers\n- Keeps only rate-limit headers, status codes and X's error codes\n- All data stays on your device, with no servers, analytics or tracking\n- Open source under the MIT license: https://github.com/toneflix/x-ratelimit\n\n**First run:** Firefox asks you to allow access to x.com. Open the extension's popup and click **Grant x.com access**.\n\nNot affiliated with or endorsed by X Corp."
+  },
+  "categories": ["social-communication"],
+  "homepage": {
+    "en-US": "https://toneflix.github.io/x-ratelimit/"
+  },
+  "version": {
+    "license": "MIT",
+    "approval_notes": "Source code: the uploaded source archive is the git tree of the release commit (also public at https://github.com/toneflix/x-ratelimit). The extension is written in TypeScript and bundled with tsdown (Rolldown). The output is not minified, and builds are deterministic.\n\nTo reproduce the submitted package:\n1. Install Node.js 24 (built with 24.22.0) and npm 11.\n2. Unzip the source archive and cd into it.\n3. npm ci\n4. npm run build:firefox\nThe output in dist/firefox/ is identical to the submitted package.\n\nWhat it does:\n- background.js observes responses from https://x.com/i/api/* with webRequest.onHeadersReceived (read-only, no blocking) and keeps only status codes and rate-limit headers.\n- content.js runs on x.com and injects hook.js (a packaged web_accessible_resource) into the page. hook.js wraps fetch/XMLHttpRequest to observe responses, never requests, and reports status, rate-limit headers and X error codes back via postMessage.\n- No request headers or cookies are read. Credential-like response headers are dropped.\n- No remote code, no network requests of its own. All data stays in storage.local.\n\nTo test: install, click Grant x.com access in the popup, browse x.com (for example like a post), then open the popup."
+  }
+}

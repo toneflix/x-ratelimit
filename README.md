@@ -81,7 +81,9 @@ npm run safari      # build + wrap dist/safari into an Xcode project at dist/saf
 
 ### Publish
 
-`npm run zip:chrome` builds the upload package. [store/CHROME_WEB_STORE.md](store/CHROME_WEB_STORE.md) has the listing text, graphics and privacy answers for the Chrome Web Store, and [PRIVACY.md](PRIVACY.md) is the privacy policy.
+- **Chrome Web Store:** `npm run zip:chrome` builds the upload package. [store/CHROME_WEB_STORE.md](store/CHROME_WEB_STORE.md) has the listing text, graphics and privacy answers.
+- **Firefox Add-ons:** `npm run sign:firefox` submits the package and its source code with your AMO API keys. [store/FIREFOX_ADDONS.md](store/FIREFOX_ADDONS.md) covers both that route and the manual one.
+- [PRIVACY.md](PRIVACY.md) is the privacy policy.
 
 ### Website
 
@@ -129,6 +131,8 @@ tsdown.config.ts       one IIFE build per entry and browser
 scripts/targets.ts     browser targets, entry list, manifest + icon output
 scripts/icons.ts       draws the PNG icons from simple geometry
 scripts/zip.ts         zips a built target for store upload
+scripts/zip-source.ts  zips the committed source for AMO review
+scripts/sign-firefox.ts  submits to addons.mozilla.org with web-ext
 store/                 store listing text and graphics
 website/               VitePress site (guide + privacy policy)
 .github/workflows/     CI and website deployment

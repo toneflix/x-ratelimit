@@ -32,7 +32,7 @@ export const TARGETS: Record<string, Target> = {
       background: { scripts: ['background.js'] },
       browser_specific_settings: {
         gecko: {
-          id: 'x-ratelimit@opensource',
+          id: 'x-ratelimit@toneflix',
           strict_min_version: '140.0',
           data_collection_permissions: { required: ['none'] },
         },
