@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rate Limit Tracker for X</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></g></symbol>
+  </svg>
+
+  <!-- Home -->
+  <main data-view="home">
+    <header class="bar">
+      <h1>Rate Limit Tracker for X</h1>
+      <div class="bar-end">
+        <span id="source" class="pill"></span>
+        <button class="icon" type="button" data-go="settings" aria-label="Settings" title="Settings"><svg><use href="#i-gear"/></svg></button>
+      </div>
+    </header>
+
+    <section id="permission" class="notice" hidden>
+      <p>The extension needs access to x.com to read API response headers.</p>
+      <button id="grant" type="button" class="primary">Grant x.com access</button>
+    </section>
+
+    <section>
+      <div id="cards" class="cards"></div>
+      <p id="cards-empty" class="empty" hidden>
+        No actions on the home screen. <button type="button" class="linklike" data-go="settings">Choose actions in Settings</button>
+      </p>
+    </section>
+
+    <section id="test" class="panel">
+      <div class="row-head">
+        <h2>Does it return 429?</h2>
+        <select id="test-endpoint" aria-label="Action to check"></select>
+      </div>
+      <p id="verdict" class="verdict"></p>
+      <p id="verdict-detail" class="muted small"></p>
+    </section>
+
+    <nav class="links">
+      <button type="button" class="link" data-go="endpoints">
+        <span class="link-text"><strong>Endpoints</strong><span class="muted small">Limits reported by every X API endpoint</span></span>
+        <span id="endpoints-count" class="count"></span>
+        <svg class="chev"><use href="#i-chev"/></svg>
+      </button>
+      <button type="button" class="link" data-go="requests">
+        <span class="link-text"><strong>Requests</strong><span class="muted small">Log of captured responses</span></span>
+        <span id="requests-count" class="count"></span>
+        <svg class="chev"><use href="#i-chev"/></svg>
+      </button>
+    </nav>
+  </main>
+
+  <!-- Endpoints -->
+  <main data-view="endpoints" hidden>
+    <header class="bar">
+      <button class="icon" type="button" data-go="home" aria-label="Back" title="Back"><svg><use href="#i-back"/></svg></button>
+      <h1>Endpoints</h1>
+      <input id="endpoint-filter" type="search" placeholder="Filter" aria-label="Filter endpoints">
+    </header>
+    <table class="table">
+      <thead><tr><th>Endpoint</th><th class="num">Left</th><th class="num">Resets</th><th></th></tr></thead>
+      <tbody id="limits"></tbody>
+    </table>
+    <p id="limits-empty" class="empty" hidden>Nothing yet. Browse x.com to collect rate-limit headers.</p>
+  </main>
+
+  <!-- Requests -->
+  <main data-view="requests" hidden>
+    <header class="bar">
+      <button class="icon" type="button" data-go="home" aria-label="Back" title="Back"><svg><use href="#i-back"/></svg></button>
+      <h1>Requests</h1>
+      <select id="request-filter" aria-label="Show">
+        <option value="all">All</option>
+        <option value="tracked">Tracked actions</option>
+        <option value="errors">Errors only</option>
+      </select>
+    </header>
+    <ol id="log" class="log"></ol>
+  </main>
+
+  <!-- Settings -->
+  <main data-view="settings" hidden>
+    <header class="bar">
+      <button class="icon" type="button" data-go="home" aria-label="Back" title="Back"><svg><use href="#i-back"/></svg></button>
+      <h1>Settings</h1>
+      <span></span>
+    </header>
+
+    <section>
+      <h2>Actions</h2>
+      <p class="muted small">Tracked actions are recorded and checked for limit errors. Turn on Home to show one as a card.</p>
+      <table class="table actions-table">
+        <thead><tr><th>Action</th><th class="center">Track</th><th class="center">Home</th><th></th></tr></thead>
+        <tbody id="action-rows"></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Add an action</h2>
+      <form id="add-form" class="add-form">
+        <div class="add-row">
+          <select id="add-method" aria-label="Method"></select>
+          <input id="add-target" type="text" required placeholder="GraphQL name or /i/api/… path" aria-label="Endpoint">
+        </div>
+        <div class="add-row">
+          <input id="add-label" type="text" maxlength="24" placeholder="Label (optional)" aria-label="Label">
+          <button type="submit" class="primary">Add</button>
+        </div>
+        <p id="add-error" class="error small" hidden></p>
+        <p class="muted small">Examples: <code>CreateRetweet</code>, <code>DeleteTweet</code>, <code>/i/api/1.1/dm/new2.json</code>. You can also track any endpoint from the Endpoints page.</p>
+      </form>
+    </section>
+
+    <section>
+      <h2>Recording</h2>
+      <label class="check">
+        <input id="record-other" type="checkbox">
+        <span>Record all other X API calls<span class="muted small">Needed for the Endpoints page and the full request log</span></span>
+      </label>
+      <label class="check">
+        <input id="inspect" type="checkbox">
+        <span>Read X error codes from the page<span class="muted small">Catches limits X reports without a 429, such as 403 + code 161</span></span>
+      </label>
+    </section>
+
+    <section>
+      <h2>Data</h2>
+      <div class="actions">
+        <button id="export" type="button">Export JSON</button>
+        <button id="clear" type="button" class="danger">Clear history</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

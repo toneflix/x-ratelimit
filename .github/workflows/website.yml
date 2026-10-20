@@ -1,0 +1,73 @@
+name: Website
+
+# Builds the VitePress site on every push and pull request that touches it,
+# and publishes it to GitHub Pages from main. In the repository settings,
+# set Pages → Source to "GitHub Actions" once.
+
+on:
+  push:
+    paths: &site-paths
+      - website/**
+      - PRIVACY.md
+      - store/*.png
+      - scripts/icons.ts
+      - scripts/website-assets.ts
+      - package.json
+      - package-lock.json
+      - .github/workflows/website.yml
+  pull_request:
+    paths: *site-paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Only needed for deploys: gives the sub-path the site is served from
+      # (e.g. /x-ratelimit for a project site, empty for a custom domain).
+      - id: pages
+        if: env.DEPLOY == 'true'
+        uses: actions/configure-pages@v6
+
+      - name: Build
+        run: npm run docs:build
+        env:
+          BASE: ${{ steps.pages.outputs.base_path }}/
+
+      - if: env.DEPLOY == 'true'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: website/.vitepress/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
