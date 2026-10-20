@@ -4,7 +4,10 @@ import { rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { defineConfig } from 'tsdown';
 import type { UserConfig } from 'tsdown';
+import { loadEnv } from './scripts/env';
 import { ENTRIES, TARGETS, root, writeStatic } from './scripts/targets';
+
+loadEnv();
 
 const names = process.env.TARGET ? process.env.TARGET.split(',') : Object.keys(TARGETS);
 

@@ -1,7 +1,10 @@
 import { defineConfig } from 'vitepress';
+import { loadEnv } from '../../scripts/env';
 
-// Set BASE when hosting under a sub-path, e.g. BASE=/x-ratelimit/ for
-// GitHub Pages project sites.
+loadEnv();
+
+// Set BASE (in .env or the environment) when hosting under a sub-path,
+// e.g. /x-ratelimit/ for a GitHub Pages project site.
 const base = process.env.BASE ?? '/';
 
 export default defineConfig({

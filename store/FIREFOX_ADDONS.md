@@ -13,13 +13,21 @@ AMO requires **source code** for bundled or compiled extensions, and this one is
 ## Option A: command line
 
 1. Sign in at addons.mozilla.org and create API credentials at <https://addons.mozilla.org/developers/addon/api/key/>.
-2. Run:
+2. Copy `.env.example` to `.env` and fill in the two keys. `.env` is git-ignored.
 
    ```sh
-   export WEB_EXT_API_KEY="user:12345:67"      # JWT issuer
-   export WEB_EXT_API_SECRET="..."             # JWT secret
+   cp .env.example .env
+   # WEB_EXT_API_KEY=user:12345:67   (JWT issuer)
+   # WEB_EXT_API_SECRET=…            (JWT secret)
+   ```
+
+3. Run:
+
+   ```sh
    npm run sign:firefox
    ```
+
+   Keys already set in your shell environment work too, and take precedence over `.env`.
 
 This builds `dist/firefox`, creates the source archive, and submits both for listed review. On the first submission, it also creates the listing from [`amo-metadata.json`](amo-metadata.json): summary, description, category, homepage, MIT license and reviewer notes. It doesn't wait for the review to finish.
 

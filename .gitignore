@@ -6,3 +6,8 @@ website/.vitepress/dist/
 # Generated from scripts/icons.ts by `npm run docs:assets`.
 website/public/logo.png
 website/public/favicon.png
+
+# Local secrets (see .env.example)
+.env
+.env.*
+!.env.example

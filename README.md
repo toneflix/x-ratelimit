@@ -67,6 +67,7 @@ The extension is written in TypeScript. [tsdown](https://tsdown.dev) bundles eac
 
 ```sh
 npm install
+cp .env.example .env   # optional: API keys and build settings, see the file
 npm run check       # tsc type-check + unit and sandboxed runtime tests
 npm run build       # dist/chrome, dist/firefox, dist/safari
 npm run build:chrome   # one target (also :firefox, :safari)
@@ -133,6 +134,7 @@ scripts/icons.ts       draws the PNG icons from simple geometry
 scripts/zip.ts         zips a built target for store upload
 scripts/zip-source.ts  zips the committed source for AMO review
 scripts/sign-firefox.ts  submits to addons.mozilla.org with web-ext
+scripts/env.ts         loads .env (see .env.example)
 store/                 store listing text and graphics
 website/               VitePress site (guide + privacy policy)
 .github/workflows/     CI and website deployment

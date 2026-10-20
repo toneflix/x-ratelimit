@@ -1,14 +1,18 @@
 // Builds the Firefox package and source archive, then submits both to
 // addons.mozilla.org for listed review with web-ext.
 // Needs WEB_EXT_API_KEY and WEB_EXT_API_SECRET (from
-// https://addons.mozilla.org/developers/addon/api/key/).
+// https://addons.mozilla.org/developers/addon/api/key/), in .env or the
+// environment.
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { loadEnv } from './env';
 import { root } from './targets';
 
+loadEnv();
+
 if (!process.env.WEB_EXT_API_KEY || !process.env.WEB_EXT_API_SECRET) {
-  throw new Error('Set WEB_EXT_API_KEY and WEB_EXT_API_SECRET to your AMO API credentials.');
+  throw new Error('Set WEB_EXT_API_KEY and WEB_EXT_API_SECRET in .env (see .env.example).');
 }
 
 const run = (cmd: string, args: string[], env: NodeJS.ProcessEnv = process.env) =>
