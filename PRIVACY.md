@@ -48,4 +48,4 @@ If this policy changes, the new version will be published here with a new "Last 
 
 ## Contact
 
-The extension is open source, and you can review exactly what it does in its source code. For questions or concerns, open an issue on the project's GitHub repository.
+The extension is open source, and you can review exactly what it does in its [source code](https://github.com/toneflix/x-ratelimit). For questions or concerns, [open an issue](https://github.com/toneflix/x-ratelimit/issues).

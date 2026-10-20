@@ -7,7 +7,7 @@ Rate Limit Tracker for X runs in Chrome (and other Chromium browsers like Edge a
 The extension isn't in the stores yet, so for now you build it yourself. You need Node.js 22 or newer.
 
 ```sh
-git clone <repository-url>
+git clone https://github.com/toneflix/x-ratelimit.git
 cd x-ratelimit
 npm install
 npm run build        # writes dist/chrome, dist/firefox and dist/safari

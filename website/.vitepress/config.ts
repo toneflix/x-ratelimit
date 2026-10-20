@@ -38,6 +38,11 @@ export default defineConfig({
         },
       ],
     },
+    socialLinks: [{ icon: 'github', link: 'https://github.com/toneflix/x-ratelimit' }],
+    editLink: {
+      pattern: 'https://github.com/toneflix/x-ratelimit/edit/main/website/:path',
+      text: 'Edit this page on GitHub',
+    },
     search: { provider: 'local' },
     footer: {
       message: 'Released under the MIT License. Not affiliated with or endorsed by X Corp.',

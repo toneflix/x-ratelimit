@@ -43,6 +43,10 @@ Not affiliated with or endorsed by X Corp.
 
 **Category:** Productivity → Tools
 
+**Official URL / website:** `https://toneflix.github.io/x-ratelimit/` (also set as `homepage_url` in the manifest)
+
+**Support URL:** `https://github.com/toneflix/x-ratelimit/issues`
+
 **Language:** English
 
 **Graphics** (all in this folder):
@@ -91,7 +95,13 @@ Limits webRequest observation to x.com, and runs a content script there that rea
 - I do not use or transfer user data for purposes that are unrelated to my item's single purpose
 - I do not use or transfer user data to determine creditworthiness or for lending purposes
 
-**Privacy policy URL:** the website's `/privacy` page once it's deployed (it renders [`PRIVACY.md`](../PRIVACY.md)), for example `https://<you>.github.io/<repo>/privacy`. The GitHub link to `PRIVACY.md` works too.
+**Privacy policy URL:**
+
+```
+https://toneflix.github.io/x-ratelimit/privacy
+```
+
+This page renders [`PRIVACY.md`](../PRIVACY.md) and goes live with the first deploy of the website workflow. Until then, `https://github.com/toneflix/x-ratelimit/blob/main/PRIVACY.md` works too.
 
 ## 4. Distribution tab
 

@@ -3,6 +3,7 @@
   "name": "Rate Limit Tracker for X",
   "short_name": "Rate Limits",
   "version": "0.1.0",
+  "homepage_url": "https://toneflix.github.io/x-ratelimit/",
   "description": "See X (Twitter) rate limits, reset countdowns and limit errors from the requests your browser already makes.",
   "permissions": ["webRequest", "storage"],
   "host_permissions": ["https://x.com/*"],

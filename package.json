@@ -6,6 +6,14 @@
   "type": "module",
   "author": "3m1n3nc3",
   "description": "Open source browser extension (Chrome, Firefox, Safari) that tracks X rate limits from observed requests.",
+  "homepage": "https://toneflix.github.io/x-ratelimit/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toneflix/x-ratelimit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/toneflix/x-ratelimit/issues"
+  },
   "scripts": {
     "build": "tsdown --config-loader tsx",
     "build:chrome": "TARGET=chrome tsdown --config-loader tsx",

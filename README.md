@@ -1,5 +1,11 @@
 # Rate Limit Tracker for X
 
+[![CI](https://github.com/toneflix/x-ratelimit/actions/workflows/ci.yml/badge.svg)](https://github.com/toneflix/x-ratelimit/actions/workflows/ci.yml)
+[![Website](https://github.com/toneflix/x-ratelimit/actions/workflows/website.yml/badge.svg)](https://toneflix.github.io/x-ratelimit/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+[Website](https://toneflix.github.io/x-ratelimit/) · [Guide](https://toneflix.github.io/x-ratelimit/guide/getting-started) · [Privacy](https://toneflix.github.io/x-ratelimit/privacy)
+
 An open source browser extension for Chrome, Firefox and Safari. It records X (Twitter) rate limits from the requests x.com already makes in your browser. It doesn't send any requests of its own and doesn't automate any actions.
 
 For every response from `https://x.com/i/api/*` it records:

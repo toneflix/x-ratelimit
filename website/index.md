@@ -19,6 +19,9 @@ hero:
     - theme: alt
       text: Privacy
       link: /privacy
+    - theme: alt
+      text: GitHub
+      link: https://github.com/toneflix/x-ratelimit
 
 features:
   - title: Live limits
